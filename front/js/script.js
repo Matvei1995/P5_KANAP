@@ -1,5 +1,4 @@
 //API FETCH
-//Afficher tout les produits
 
 let url = "http://localhost:3000/api/products";
 let txt = "";
@@ -7,18 +6,17 @@ fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
 
-        console.log(data);
         displayProducts(data);
         document.getElementById("items").innerHTML = txt;
     })
+    //Si erreur afficher le texte ci dessous
     .catch((er) => {
         document.querySelector("#items").innerHTML = "<h1>Attention pensée à allumer le serveur API <br> <br>erreur 404</h1>";
         console.log("erreur 404, sur ressource api: " + er);
     });
 
-
+//Afficher tout les produits
 function displayProducts(data) {
-    let i = 0;
 
     for (i = 0; i < data.length; i++) {
 
@@ -32,5 +30,5 @@ function displayProducts(data) {
           </a> ';
 
     }
-    
+
 }

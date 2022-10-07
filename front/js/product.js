@@ -6,12 +6,12 @@ const url = "http://localhost:3000/api/products/"
 //Nouveau Paramètre avec UrlSearchParams
 let params = new URLSearchParams(document.location.search);
 let id = params.get("_id");
+let product = "";
 
-console.log("La variable params =" + params);
 console.log("Voici l'id du produit :" + id);
 fetch(url + id)
     .then((res) => res.json())
-    .then(function(data) {
+    .then(function displayProduct(data) {
 
         let img = document.createElement("img");
         img.src = data.imageUrl;
@@ -22,6 +22,8 @@ fetch(url + id)
         document.getElementById("price").innerHTML = data.price;
         document.getElementById("description").innerHTML = data.description;
         addColors(data);
+        product = data;
+
     })
     .catch((er) => {
         document.querySelector(".item").innerHTML = "<h1>Attention erreur 404</h1>";
@@ -31,101 +33,97 @@ fetch(url + id)
 
 function addColors(data) {
 
-    console.log(data.colors);
+
     let colors = "Choissisez la Couleur";
     for (i = 0; i < data.colors.length; i++) {
 
         colors += '<option>' + data.colors[i] + '</option>';
-        console.log(data.colors[i]);
+
     }
     document.getElementById("colors").innerHTML = colors;
-};
 
-/********************Gestion De l'Ajout AU Panier ********************/
 
-localStorage.setItem("product", "id");
-localStorage.getItem("product");
-for (let i = 0; i < localStorage.length; i++) {
-    localStorage.key(i);
-}
-console.log(localStorage);
-let addToBasket = document.getElementById("colors");
-let productChoise = addToBasket.value;
-console.log("test product choix" + productChoise);
-/*addToBasket.addEventListener("click", function saveInToLocalStorage() {
+    /********************Gestion De l'Ajout AU Panier ********************/
+    console.log(data);
 
-    let color = '';
-    let quantity = '';
-    let product = [id, color, quantity];
-    localStorage.setItem('product', product += product);
 
-})
-saveInToLocalStorage();*/
-//let productInfo = ["id,  "]
-/* id: id,
-        select: ("Color", document.getElementById("colors").value),
-        quantity: ("Quantity", document.getElementById("quantity").value)
-    }*/
+    let addToCart = document.getElementById("addToCart");
+    let selectedcolor = document.getElementById("colors");
+    let selectedQuantity = document.getElementById("quantity");
+    let basketInLocalStorage = "";
+    let loop = 0;
+    addToCart.addEventListener("click", function addProductToCart() {
 
-/* let findProducts = JSON.parse(localStorage.getItem("Kanap"));
-    //Si le panier comporte déjà au moins 1 article
-    if (findProducts) {
-        let resultFind = findProducts.find(
-            (res) => res.id === id && res.select === document.getElementById("colors").value);
-        //Si le produit commandé est déjà dans le panier
-        if (resultFind) {
-            let newQuantity =
-                parseInt(productInfo.quantity) + parseInt(resultFind.quantity);
-            resultFind.quantity = newQuantity;
-            localStorage.setItem("Kanap", JSON.stringify(products));
-            alert("Attention déja dans votre panier");
-            //Si le produit commandé n'est pas dans le panier
-        } else {
 
-            localStorage.setItem("Kanap", JSON.stringify(products));
-            products.push(productInfo);
-            alert("veuillez ajouter un article");
+
+
+        /*************************************************PERMET DE VERIFIER LES QUANTITES***********************************************/
+        if (selectedQuantity.value >= 101) {
+            alert("Veuillez ajouté une quantité comprise entre 1 et 100");
+            return false
+
         }
-        //Si le panier est vide
-    } else {
-        findProducts = [];
-        localStorage.setItem("Kanap", JSON.stringify(findProducts));
-        products.push(productInfo);
 
-    }
-    console.log(productInfo);
-    console.log(findProducts);
+        if (selectedQuantity.value <= 0) {
 
-})*/
+            return alert("Veuillez ajouté une quantité");
 
+        } else if (selectedQuantity.value >= 1 && selectedQuantity.value < 101) {
 
-
-
-
-//Ajout AU Panier (A vérifier code pas définitif à supprimer si besoin)
-/*let button = document.getElementById("addtoCart").innerHTML;
-button.addEventListener("click", addToBasket);
-
-function addToBasket(button) {
-    let theColorChoice = document.querySelector("#colors").value;
-    let theQuantityChoice = document.querySelector("#quantity").value;
-
-    // Si la couleur n'a pas été choisit 
-    if (colors == null) {
-        alert(" 🚫 ATTENTION Vous n'avez pas choisi de couleur 🚫 !");
-        return;
-    }
-    // Si la quantité est superieur à 100
-    else if (quantity > 100) {
-        alert("🚫 ATTENTION Le nombres du produit doit être - de 100 ! 🚫");
-        return;
-
-    }
-    //La commande à bien été enregistré
-    else {
-        alert("C'est bien ajouté au panier, Merci 😀!");
-    }
+            let productObject = {
+                idProduct: id,
+                Quantity: selectedQuantity.value,
+                color: selectedcolor.value
+            };
+            localStorage.setItem("product", JSON.stringify(productObject));
 
 
-}
-addToBasket();*/
+
+
+
+            alert("Ajout de l\'article " + product.name + " Couleur: " + selectedcolor.value + " Quantite: " + selectedQuantity.value);
+
+            // Si le localStorage est vide
+            if (!productObject) { //(!basketInLocalStorage) { //(!localStorage.getItem("product")) {
+                console.log("Ligne 79");
+                localStorage.getItem("product");
+                basketInLocalStorage = [];
+                //basketInLocalStorage.push(productObject);
+
+                console.log(" Si le localStorage est vide " + selectedcolor.value);
+                console.log(" Si le localStorage est vide " + selectedQuantity.value);
+
+
+            }
+
+
+            // Si le localStorage contient un produit 
+            else {
+                console.log("le localstorage n'est pas vide");
+                console.log("les Object du tableau " + productObject);
+
+                basketInLocalStorage = localStorage.getItem("product");
+                basketInLocalStorage += productObject;
+                localStorage.setItem("product", (basketInLocalStorage));
+                /*for (i = 0; i < basketInLocalStorage.length; i++) {
+
+                    if (basketInLocalStorage[i].selectedcolor === selectedcolor.value && basketInLocalStorage[i].selectedQuantity === selectedQuantity.value) {
+                        selectedQuantity.value == selectedQuantity.value++;
+                        basketInLocalStorage.push(selectedQuantity.value);
+                        localStorage.setItem("product", JSON.stringify(basketInLocalStorage));
+                        loop = 1;
+                        console.log(basketInLocalStorage);
+                        basketInLocalStorage = JSON.parseInt(localStorage.getItem("product"));
+                        basketInLocalStorage.push(productObject)
+                    }
+
+                    if (loop == 0) {
+                        basketInLocalStorage.push(productObject);
+                    }
+                }*/
+            }
+
+
+        }
+    })
+};
