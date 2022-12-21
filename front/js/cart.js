@@ -1,5 +1,10 @@
 /***************************************Ré des données Produits localstorage au panier**************************************/
-let txt = "";
+async function getCartToLocalStorage() {
+    let cartLocalStorage = await JSON.parse(localStorage.getItem("cart"));
+
+    console.log(cartLocalStorage);
+}
+/*let txt = "";
 const url = "http://localhost:3000/api/products/"
 
 //                            Création variable pour le prix total et quantité total
@@ -74,13 +79,13 @@ function displayCart() {
     document.getElementById("cart__items").innerHTML = "Voici votre panier" + txt;
 }
 
-function calculPrice(price, quantity) {
+async function calculPrice(price, quantity) {
 
     totalPriceOfProduct += price * quantity;
 
 }
 
-function calculTotalQuantity(quantity) {
+async function calculTotalQuantity(quantity) {
 
     totalQuantityOfProduct += Number(quantity);
     document.getElementById("totalQuantity").innerHTML = totalQuantityOfProduct;
@@ -95,17 +100,18 @@ async function ifTheQuantityChange() {
     });
 
     calculTotalQuantity();
-    calculPrice();
+    calculPrice(price, quantity);
+    calculTotalQuantity(quantity)
 }
 
 
 
-function displayPrice() {
+async function displayPrice() {
 
     document.getElementById("totalPrice").innerHTML = totalPriceOfProduct;
     return totalPriceOfProduct;
 
-}
+}*/
 /**********************************Supprimer le produit stocker dans le local Storage *********************************/
 
 
@@ -208,7 +214,7 @@ function emailCheck() {
         return false;
     }
 }*/
-let RegExp = /^[a-zA-Z0-9æœ.!#$%&’*+/=?^_`{|}~"(),:;<>@[\]-]+@([\w-]+\.)+[\w-]{2,4}$/i;;
+/*let RegExp = /^[a-zA-Z0-9æœ.!#$%&’*+/=?^_`{|}~"(),:;<>@[\]-]+@([\w-]+\.)+[\w-]{2,4}$/i;;
 const sub = document.getElementById("order");
 
 function submitTheOrderId() {
@@ -234,18 +240,22 @@ function checkTheRequest() {
     const city = document.getElementById("city").value;
     submitOK = "true";
 
-    if (firstName.length > 10) {
-        alert("Il ne peut pas y avoir de chiffre");
+    if (firstName.length || lastName.length || city.length > 10) {
+        alert("Il ne peut pas y avoir de chiffre et doit moins de 10 caractère");
         submitOK = "false";
     }
 
 
     if (!RegExp.test(email)) {
-        alert("e-mail non valide !");
+
         submitOK = "false";
+        alert("e-mail non valide !");
+    } else {
+        email == null;
+        return true;
     }
 
     if (submitOK == "false") {
         return false;
     }
-}
+}*/
