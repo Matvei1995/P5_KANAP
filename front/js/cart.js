@@ -148,7 +148,7 @@ cartDisplay();
 
 // /////////////////////////////////////////////////////////
 // /FORMULAIRE/ //
-// Ecouterle formulaire
+// Permet de vérifier les informations de l'utilisateur
 
 const form = document.querySelector(".cart__order__form");
 
@@ -206,7 +206,7 @@ const validLastName = function(inputLastName) {
 };
 
 
-// Validation de l'Address
+// Validation de l'Addresse
 const validAddress = function(inputAddress) {
     if (addressRegExp.test(inputAddress.value)) {
         document.getElementById("addressErrorMsg").innerText = "";

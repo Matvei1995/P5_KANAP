@@ -14,7 +14,7 @@ let productdescription = document.getElementById("description");
 let selectColors = document.getElementById("colors");
 
 
-//Récupération du produit grace a son id
+//Récupération des infos du produit grace a son id
 async function getProduct() {
     let response = await fetch("http://localhost:3000/api/products/" + productId);
     const productData = await response.json();
@@ -25,20 +25,16 @@ async function getProduct() {
     productPrice.innerHTML = productData.price;
     productdescription.innerHTML = productData.description;
     productData.colors.forEach((colors) => {
-            let optionColors = document.createElement("option");
-            selectColors.appendChild(optionColors);
-            optionColors.value = colors;
-            optionColors.innerHTML = colors;
-        })
-        /*.catch((er) => {
-            document.querySelector(".item").innerHTML = "<h1>Attention erreur 404</h1>";
-            console.log(er);
+        let optionColors = document.createElement("option");
+        selectColors.appendChild(optionColors);
+        optionColors.value = colors;
+        optionColors.innerHTML = colors;
+    })
 
-        });*/
 }
 getProduct();
 
-//Ajout un produit au panier
+//Ajout d'un produit vers le local storage puis au panier
 
 document.getElementById("addToCart").onclick = (data) => {
     const color = selectColors.value;

@@ -1,13 +1,13 @@
 //API FETCH
 
 let url = "http://localhost:3000/api/products";
-let txt = "";
+
 fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
 
         displayProducts(data);
-        document.getElementById("items").innerHTML = txt;
+
     })
     //Si erreur afficher le texte ci dessous
     .catch((er) => {
@@ -17,6 +17,7 @@ fetch(url)
 
 //Afficher tout les produits
 function displayProducts(data) {
+    let txt = "";
 
     for (i = 0; i < data.length; i++) {
 
@@ -30,5 +31,5 @@ function displayProducts(data) {
           </a> ';
 
     }
-
+    document.getElementById("items").innerHTML = txt;
 }
