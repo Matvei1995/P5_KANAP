@@ -1,10 +1,14 @@
 {
+  "homepage": "https://Matvei1995.github.io/P5_KANAP",
   "name": "kanap-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy":"npm run build",
+    "deploy": "gh-pages -d build"
+    
   },
   "author": "",
   "license": "ISC",
